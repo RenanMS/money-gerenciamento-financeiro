@@ -1,13 +1,9 @@
-import styled from 'styled-components';
-
-const Title = styled.h1`
-  color: blue;
-`
+import { Header } from './components/Header';
 
 export function App() {
   return (
     <div className="App">
-      <Title>Money - Gerenciamento Financeiro</Title>
+      <Header />
     </div>
   );
 }
