@@ -51,7 +51,7 @@ export const GlobalReset = createGlobalStyle`
   }
 
   table {
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
     border-spacing: 0;
   }
 `

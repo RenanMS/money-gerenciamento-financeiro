@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { GlobalStyle } from './assets/styles/global';
-import { Dashboard } from './components/Dashboard';
+import { GlobalReset } from './assets/styles/reset';
 import { Header } from './components/Header';
+import { Dashboard } from './components/Dashboard';
 import { NewTransactionModal } from './components/NewTransactionModal';
 
 export function App() {
@@ -17,9 +18,12 @@ export function App() {
 
   return (
     <div className="App">
+      <GlobalStyle />
+      <GlobalReset />
+
       <Header onOpenNewTranslationModal={handleOpenNewTranslationModal} />
       <Dashboard />
-      <GlobalStyle />
+
       <NewTransactionModal 
         isModalOpen={isNewTranslationModalOpen}
         onRequestClose={handleCloseNewTranslationModal}
