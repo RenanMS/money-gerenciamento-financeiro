@@ -1,46 +1,59 @@
 import { Card } from "../Card";
-import { Container } from "./styles";
 
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
 import totalImg from '../../assets/total.svg'
 import { TransactionsContext } from "../../TransactionsContext";
 import { useContext } from "react";
-
-const datas = [
-  {
-    title: 'Entradas',
-    img: incomeImg,
-    alt: 'Entradas',
-    value: 'R$ 1000,00'
-  },
-  {
-    title: 'Saídas',
-    img: outcomeImg,
-    alt: 'Saídas',
-    value: '- R$ 500,00'
-  },
-  {
-    title: 'Total',
-    img: totalImg,
-    alt: 'Total',
-    value: 'R$ 500,00',
-    classe: 'highlight-background'
-  }
-]
+import { Container } from "./styles";
 
 export function Summary() {
 
   const {transactions} = useContext(TransactionsContext);
-  console.log('a',transactions)
+  
+  const summary = transactions.reduce((acc, transaction) => {
+
+    if (transaction.typeTransaction === 'deposit') {
+      acc.deposits += transaction.amount
+      acc.total += transaction.amount
+    } else {
+      acc.withdraws += transaction.amount
+      acc.total -= transaction.amount
+    }
+
+    return acc
+
+  }, {
+    deposits: 0,
+    withdraws: 0,
+    total: 0
+  })
 
   return (
     <Container>
-      {
-        datas.map(data => {
-          return <Card key={data.title} card={data}/>
-        })
-      }
+      
+        <Card card={{
+          title: 'Entradas',
+          img: incomeImg,
+          alt: 'Entradas',
+          value: summary.deposits
+        }}/>
+
+        <Card card={{
+          title: 'Saídas',
+          img: outcomeImg,
+          alt: 'Saídas',
+          value: summary.withdraws * -1
+        }}/>
+
+        <Card card={{
+          title: 'Total',
+          img: totalImg,
+          alt: 'Total',
+          value: summary.total,
+          classe: 'highlight-background'
+        }}/>
+      
     </Container>
-  );
+  )
 }

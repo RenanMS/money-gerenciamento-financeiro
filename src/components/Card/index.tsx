@@ -5,19 +5,26 @@ interface CardProps {
     title: string;
     img: string;
     alt: string;
-    value: string;
+    value: number;
     classe?: string
   }
 }
 
 export function Card({card}: CardProps) {
   return (
-    <Container className={card.classe ?? ''}>
+    <Container className={card.classe ?? ''} title={card.alt}>
       <header>
         <p>{card.title}</p>
         <img src={card.img} alt={card.alt} />
       </header>
-      <strong>{card.value}</strong>
+      <strong>
+        {
+          new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(card.value)
+        }
+      </strong>
     </Container>
   );
 }
