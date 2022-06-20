@@ -23,6 +23,10 @@ export const Content = styled.div`
     padding: '2rem 1rem 6.8rem'
   })}
 
+  ${respond.below(375, {
+    flexDirection: 'column',
+  })}
+
   button {
     font-size: 1rem;
     color: var(--white);
@@ -37,5 +41,9 @@ export const Content = styled.div`
     &:hover {
       filter: brightness(0.9);
     }
+
+    ${respond.below(375, {
+      marginTop: '1rem',
+    })}
   }
 `
