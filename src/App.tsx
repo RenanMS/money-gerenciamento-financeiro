@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GlobalStyle } from './assets/styles/global';
+import { GlobalReset } from './assets/styles/reset';
 import { Dashboard } from './components/Dashboard';
 import { Header } from './components/Header';
 import { NewTransactionModal } from './components/NewTransactionModal';
@@ -19,9 +20,12 @@ export function App() {
   return (
     <TransactionsProvider>
       <div className="App">
+        <GlobalStyle />
+        <GlobalReset />
+
         <Header onOpenNewTranslationModal={handleOpenNewTranslationModal} />
         <Dashboard />
-        <GlobalStyle />
+        
         <NewTransactionModal 
           isModalOpen={isNewTranslationModalOpen}
           onRequestClose={handleCloseNewTranslationModal}

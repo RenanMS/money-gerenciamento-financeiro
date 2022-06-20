@@ -24,15 +24,26 @@ export function NewTransactionModal({isModalOpen, onRequestClose}: NewTransactio
   const [value, setValue] = useState(0);
   const [category, setCategory] = useState('');
 
-  function handleCreateTransaction(event: FormEvent) {
+  async function handleCreateTransaction(event: FormEvent) {
     event.preventDefault();
 
-    createTransaction({
+    await createTransaction({
       title,
       amount: value,
       category,
       typeTransaction
     })
+
+    // Caso de tudo certo no POST
+
+    // Reseta os campos do modal
+    setTitle('')
+    setValue(0)
+    setCategory('')
+    setTypeTransaction('deposit')
+
+    // Fecha o modal
+    onRequestClose();
   }
 
   return (
