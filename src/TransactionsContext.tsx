@@ -67,8 +67,25 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       .then(res => setTransactions(res.data.transactions))
   },[])
 
-  async function createTransaction(transaction: TransactionsInput) {
-    await api.post('transactions', transaction)
+  async function createTransaction(transactionInput: TransactionsInput) {
+
+    // Toda transação deve conter a data de criação.
+    // Configure o miragejs (recomendado) para add a data quando receber a nova trasação
+    // ou informe a data diretamente no objeto enviado. 
+
+    const response = await api.post('transactions', {
+      ...transactionInput,
+      createAt: new Date()
+    })
+
+    const { transaction } = response.data;
+
+    // setTransactions recebe um novo vetor que copiando o vetor original e
+    // adiciona uma nova transação.
+    setTransactions([
+      ...transactions,
+      transaction
+    ])
   }
 
   return (
