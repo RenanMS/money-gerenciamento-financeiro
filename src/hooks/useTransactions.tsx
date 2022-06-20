@@ -1,7 +1,5 @@
-// Com o uso go hook esse arquivo parou de ser usado
-
-import { createContext, ReactNode, useEffect, useState } from "react";
-import { api } from "./services/api";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { api } from "../services/api";
 
 interface Transactions {
   id: number;
@@ -43,7 +41,7 @@ interface TransactionsContextData {
   createTransaction: (transactions: TransactionsInput) => Promise<void>;
 }
 
-export const TransactionsContext = createContext<TransactionsContextData>(
+const TransactionsContext = createContext<TransactionsContextData>(
   // Quando iniciamos um contexto com objeto vazio e em casos de erro
   // temos que forçar o contexto a entender que o objeto vazio está
   // recebendo o tipo desejado
@@ -95,4 +93,9 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       { children }
     </TransactionsContext.Provider>
   )
+}
+
+export function useTransactions() {
+  const context = useContext(TransactionsContext)
+  return context
 }
