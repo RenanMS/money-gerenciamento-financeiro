@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { respond } from '../../util/StyledBreakpointRespond'
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -87,6 +88,14 @@ export const GlobalStyle = createGlobalStyle`
     padding: 3rem;
     position: relative;
     border-radius: 0.24rem;
+
+    ${respond.below('sm', {
+      position: 'fixed',
+      bottom: '0',
+      maxWidth: 'initial',
+      borderRadius: '0'
+    })}
+
   }
 
   .react-close-modal {

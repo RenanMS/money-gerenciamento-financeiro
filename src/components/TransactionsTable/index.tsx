@@ -6,31 +6,31 @@ export function TransactionsTable() {
 
   return (
     <Container>
-      <table>
+      <table className="reponsive card">
         <thead>
           <tr>
-            <th>Título</th>
-            <th>Valor</th>
-            <th>Categoria</th>
-            <th>Data</th>
+            <th data-scope="col">Título</th>
+            <th data-scope="col">Valor</th>
+            <th data-scope="col">Categoria</th>
+            <th data-scope="col">Data</th>
           </tr>
         </thead>
 
         <tbody>
           {transactions.map(transaction => (
-            <tr key={transaction.id}>
-              <td>{transaction.title}</td>
-              <td className={transaction.typeTransaction}>
+            <tr key={transaction.id} data-scope="row">
+              <td data-label="Título">{transaction.title}</td>
+              <td data-label="Valor" className={transaction.typeTransaction}>
                 {new Intl.NumberFormat('pt-BR', {
                   style: 'currency',
                   currency: 'BRL',
                 }).format(transaction.amount)}
                 </td>
-              <td>{transaction.category}</td>
-              <td>
-              {new Intl.DateTimeFormat('pt-BR').format(
-                new Date(transaction.createAt)
-              )}
+              <td data-label="Categoria">{transaction.category}</td>
+              <td data-label="Data">
+                {new Intl.DateTimeFormat('pt-BR').format(
+                  new Date(transaction.createAt)
+                )}
               </td>
             </tr>
           ))}
