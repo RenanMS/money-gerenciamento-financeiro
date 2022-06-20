@@ -17,7 +17,7 @@ export function mirageJS() {
             typeTransaction: 'deposit',
             category: 'Dev',
             amount: 6000,
-            createAt: new Date('2022-01-05 21:34:00')
+            createAt: new Date('2022-05-01 21:34:00')
           },
           {
             id: 2,
@@ -25,7 +25,7 @@ export function mirageJS() {
             typeTransaction: 'withdraw',
             category: 'Comida',
             amount: 55,
-            createAt: new Date('2022-01-05 22:34:00')
+            createAt: new Date('2022-05-01 22:34:00')
           }
         ]
       })
