@@ -10,6 +10,20 @@ interface Transactions {
   createAt: string;
 }
 
+// Herda todos os compos exceto 'id' | 'createAt'
+type TransactionsInput = Omit<Transactions, 'id' | 'createAt'>
+
+// Informa qual campo que herdar
+// type TransactionsInput = Pick<Transactions, 'title' | 'amount' | 'typeTransaction'| 'category'>
+
+// Criar uma nova interface também soluciona mas as soluções acima são mais convenientes
+// interface Transactions {
+//   title: string;
+//   typeTransaction: string;
+//   category: string;
+//   amount: number;
+// }
+
 // Quando um contexto recebe algum conteúdo é necessário informar qual o tipo de filhos.
 // ReactNode é o mesmo que informar que o contexto pode receber qualquer coisa.
 interface TransactionsProviderProps {
@@ -22,7 +36,17 @@ interface TransactionsProviderProps {
 // É necessário iniciar um valor para o contexto.
 // Para está aplicação é necessário um array que receba objetos que representa uma transação.
 
-export const TransactionsContext = createContext<Transactions[]>([]);
+interface TransactionsContextData {
+  transactions: Transactions[];
+  createTransaction: (transactions: TransactionsInput) => void;
+}
+
+export const TransactionsContext = createContext<TransactionsContextData>(
+  // Quando iniciamos um contexto com objeto vazio e em casos de erro
+  // temos que forçar o contexto a entender que o objeto vazio está
+  // recebendo o tipo desejado
+  {} as TransactionsContextData
+);
 
 // Acessando a váriavel TransactionsContext note que temos três propriedades 
 // TransactionsContext.Consumer
@@ -43,8 +67,12 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       .then(res => setTransactions(res.data.transactions))
   },[])
 
+  function createTransaction(transaction: TransactionsInput) {
+    api.post('transactions', transaction)
+  }
+
   return (
-    <TransactionsContext.Provider value={transactions}>
+    <TransactionsContext.Provider value={{transactions, createTransaction}}>
       { children }
     </TransactionsContext.Provider>
   )
