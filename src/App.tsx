@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { GlobalStyle } from './assets/styles/global';
+import { GlobalReset } from './assets/styles/reset';
+import { Dashboard } from './components/Dashboard';
+import { Header } from './components/Header';
+import { NewTransactionModal } from './components/NewTransactionModal';
+import { TransactionsProvider } from './hooks/useTransactions';
 
-function App() {
+export function App() {
+  const [isNewTranslationModalOpen, setIsNewTranslationModalOpen] = useState(false);
+  
+  function handleOpenNewTranslationModal() {
+    setIsNewTranslationModalOpen(true)
+  }
+
+  function handleCloseNewTranslationModal() {
+    setIsNewTranslationModalOpen(false)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TransactionsProvider>
+      <div className="App">
+        <GlobalStyle />
+        <GlobalReset />
+
+        <Header onOpenNewTranslationModal={handleOpenNewTranslationModal} />
+        <Dashboard />
+        
+        <NewTransactionModal 
+          isModalOpen={isNewTranslationModalOpen}
+          onRequestClose={handleCloseNewTranslationModal}
+        />
+      </div>
+    </TransactionsProvider>
   );
 }
 
-export default App;
+// TransactionsContext envolve toda a aplicação permitindo qualquer componente ter acesso ao contexto
+// Array vazio foi setado como valor inicial
