@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { GlobalStyle } from './assets/styles/global';
-import { GlobalReset } from './assets/styles/reset';
-import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
+import { Header } from './components/Header';
 import { NewTransactionModal } from './components/NewTransactionModal';
-import { TransactionsContext } from './TransactionsContext';
+import { TransactionsProvider } from './TransactionsContext';
 
 export function App() {
   const [isNewTranslationModalOpen, setIsNewTranslationModalOpen] = useState(false);
@@ -17,22 +16,20 @@ export function App() {
     setIsNewTranslationModalOpen(false)
   }
 
-  // TransactionsContext envolve toda a aplicação permitindo qualquer componente ter acesso ao contexto
-  // Array vazio foi setado como valor inicial
   return (
-    <TransactionsContext.Provider value={[]}>
+    <TransactionsProvider>
       <div className="App">
-        <GlobalStyle />
-        <GlobalReset />
-
         <Header onOpenNewTranslationModal={handleOpenNewTranslationModal} />
         <Dashboard />
-
+        <GlobalStyle />
         <NewTransactionModal 
           isModalOpen={isNewTranslationModalOpen}
           onRequestClose={handleCloseNewTranslationModal}
         />
       </div>
-    </TransactionsContext.Provider>
+    </TransactionsProvider>
   );
 }
+
+// TransactionsContext envolve toda a aplicação permitindo qualquer componente ter acesso ao contexto
+// Array vazio foi setado como valor inicial
